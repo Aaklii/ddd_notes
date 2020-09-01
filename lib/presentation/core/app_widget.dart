@@ -1,17 +1,29 @@
+import 'package:ddd_notes/application/auth/auth_bloc.dart';
+import 'package:ddd_notes/injection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Material App',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Material App Bar'),
-        ),
-        body: Center(
-          child: Container(
-            child: Text('Hello World'),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+          getIt<AuthBloc>()..add(const AuthEvent.authCheckRequested()),
+        )
+      ],
+      child: MaterialApp(
+        title: 'Notes',
+        debugShowCheckedModeBanner: false,
+        home: Container(),
+        theme: ThemeData.light().copyWith(
+          primaryColor: Colors.green[800],
+          accentColor: Colors.blueAccent,
+          inputDecorationTheme: InputDecorationTheme(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
           ),
         ),
       ),
