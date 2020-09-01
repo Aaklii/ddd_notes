@@ -7,8 +7,11 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ddd_notes/domain/auth/auth_failure.dart';
 import 'package:ddd_notes/domain/auth/i_auth_facade.dart';
 import 'package:ddd_notes/domain/auth/value_objects.dart';
+import 'package:injectable/injectable.dart';
+import './firebase_user_mapper.dart';
 
 //? Implementation of IAuthFacade Contract
+@LazySingleton(as: IAuthFacade)
 class FirebaseAuthFacade implements IAuthFacade {
   final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
@@ -18,11 +21,15 @@ class FirebaseAuthFacade implements IAuthFacade {
     this._googleSignIn,
   );
 
+
+  //? We will get Signed In User Id from the FirebaseAuth using Using currentUser method
+  //? and then pass it non null value to the User class, setting up the value of id to
+  //? UniqueId.fromUniqueString(uid)
+  //? toDomain is defined in extension of FirebaseUser
   @override
-  Future<Option<User>> getSignedInUser() {
-    // TODO: implement getSignedInUser
-    throw UnimplementedError();
-  }
+  Future<Option<User>> getSignedInUser()  => _firebaseAuth
+      .currentUser()
+      .then((firebaseUser) => optionOf(firebaseUser?.toDomain()));
 
   //
   @override
@@ -104,8 +111,8 @@ class FirebaseAuthFacade implements IAuthFacade {
 
 
   @override
-  Future<void> signOut() {
-    // TODO: implement signOut
-    throw UnimplementedError();
-  }
+  Future<void> signOut() => Future.wait([
+    _googleSignIn.signOut(),
+    _firebaseAuth.signOut(),
+  ]);
 }

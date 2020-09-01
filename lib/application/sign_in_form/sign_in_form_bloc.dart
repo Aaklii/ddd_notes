@@ -2,19 +2,21 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
+import 'package:meta/meta.dart';
+
 import 'package:ddd_notes/domain/auth/auth_failure.dart';
 import 'package:ddd_notes/domain/auth/i_auth_facade.dart';
 import 'package:ddd_notes/domain/auth/value_objects.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:meta/meta.dart';
 
 part 'sign_in_form_event.dart';
-
 part 'sign_in_form_state.dart';
 
 part 'sign_in_form_bloc.freezed.dart';
 
 //? SignInFormBloc transforms incoming events into states
+@injectable
 class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
   //? IAuthFacade will be used to call Authentication Methods from the Contract
   final IAuthFacade _authFacade;
