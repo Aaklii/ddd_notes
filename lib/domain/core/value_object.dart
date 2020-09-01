@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:ddd_notes/domain/core/errors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:ddd_notes/domain/core/failures.dart';
@@ -12,6 +13,25 @@ import 'package:uuid/uuid.dart';
 abstract class ValueObject<T> {
   const ValueObject();
   Either<ValueFailure<T>, T> get value;
+
+  //? From Either class type Right() value is called when isValid is called
+  bool isValid() => value.isRight();
+
+  /// Throws [UnexpectedValueError] containing the [ValueFailure]
+  T getOrCrash() {
+    // id = identity - same as writing (right) => right
+    return value.fold((f) => throw UnexpectedValueError(f), id);
+  }
+
+  //? This condition is called when we are interested in failure value from
+  //? Either type. and instead of calling void from right side we
+  //? call Unit which won't show unexpected behaviour in program
+  Either<ValueFailure<dynamic>, Unit> get failureOrUnit {
+    return value.fold(
+          (l) => left(l),
+          (r) => right(unit),
+    );
+  }
 
   @override
   bool operator ==(Object o) {
