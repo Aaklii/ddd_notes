@@ -1,0 +1,27 @@
+import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:ddd_notes/domain/core/failures.dart';
+
+//? ValueObject parent for Email and Password
+//? The concept of identifier equality refers to entities,
+//? the concept of structural equality to value objects.
+//? Value objects should be immutable
+@immutable
+abstract class ValueObject<T> {
+  const ValueObject();
+  Either<ValueFailure<T>, T> get value;
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
+
+    return o is ValueObject<T> && o.value == value;
+  }
+
+  @override
+  int get hashCode => value.hashCode;
+
+  @override
+  String toString() => 'Value($value)';
+}
