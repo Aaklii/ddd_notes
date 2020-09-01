@@ -3,7 +3,7 @@ import 'package:ddd_notes/domain/core/failures.dart';
 import 'package:ddd_notes/domain/core/value_object.dart';
 import 'package:ddd_notes/domain/core/value_validators.dart';
 
-//? EmailAddress ValueObject taking String type value
+//? EmailAddress ValueObject of String type
 //? Having self validation property
 class EmailAddress extends ValueObject<String> {
   //? Either returns failure if email input value is invalid
@@ -21,6 +21,7 @@ class EmailAddress extends ValueObject<String> {
   const EmailAddress._(this.value);
 }
 
+//? Password ValueObject of String type
 class Password extends ValueObject<String> {
   //? Either returns failure if password input value is invalid
   //? If !(input.length >= 6) [value_validators.dart]
