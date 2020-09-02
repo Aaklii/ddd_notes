@@ -9,6 +9,7 @@ class EmailAddress extends ValueObject<String> {
   //? Either returns failure if email input value is invalid
   //? If !(RegExp(emailRegex).hasMatch(input)) [value_validators.dart]
   //? else correct validated value if (RegExp(emailRegex).hasMatch(input))
+  @override
   final Either<ValueFailure<String>, String> value;
 
   factory EmailAddress(String input) {
@@ -26,6 +27,7 @@ class Password extends ValueObject<String> {
   //? Either returns failure if password input value is invalid
   //? If !(input.length >= 6) [value_validators.dart]
   //? else correct validated value if (input.length >= 6)
+  @override
   final Either<ValueFailure<String>, String> value;
 
   factory Password(String input) {
