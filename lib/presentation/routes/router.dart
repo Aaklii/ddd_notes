@@ -7,6 +7,7 @@ import 'package:ddd_notes/presentation/splash/splash_page.dart';
   routes: <AutoRoute>[
     MaterialRoute(page: SplashPage, initial: true),
     MaterialRoute(page: SignInPage),
+
   ],
 )
 
