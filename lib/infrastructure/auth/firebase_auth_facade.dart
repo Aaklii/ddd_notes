@@ -14,7 +14,6 @@ import 'package:ddd_notes/domain/auth/value_objects.dart';
 // ********************##********************##********************#
 // ********************##********************##********************#
 
-
 // * Start of FirebaseAuthFacade
 //? Implementation of IAuthFacade Contract
 class FirebaseAuthFacade implements IAuthFacade {
@@ -26,13 +25,13 @@ class FirebaseAuthFacade implements IAuthFacade {
     this._googleSignIn,
   );
 
+  //? Implementation of getSignedInUser
   @override
   Future<Option<User>> getSignedInUser() {
-    // TODO: implement getSignedInUser
     throw UnimplementedError();
   }
 
-  //
+  //? Implementation of registerWithEmailAndPassword
   @override
   Future<Either<AuthFailure, Unit>> registerWithEmailAndPassword({
     @required EmailAddress emailAddress,
@@ -64,6 +63,7 @@ class FirebaseAuthFacade implements IAuthFacade {
     }
   }
 
+  //? Implementation of signInWithEmailAndPassword
   @override
   Future<Either<AuthFailure, Unit>> signInWithEmailAndPassword({
     @required EmailAddress emailAddress,
@@ -87,6 +87,7 @@ class FirebaseAuthFacade implements IAuthFacade {
     }
   }
 
+  //? Implementation of signInWithGoogle
   @override
   Future<Either<AuthFailure, Unit>> signInWithGoogle() async {
     try {
@@ -109,11 +110,9 @@ class FirebaseAuthFacade implements IAuthFacade {
     }
   }
 
-
-
+  //? Implementation of signOut
   @override
   Future<void> signOut() {
-    // TODO: implement signOut
     throw UnimplementedError();
   }
 }
