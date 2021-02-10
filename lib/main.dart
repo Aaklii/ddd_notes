@@ -3,48 +3,17 @@
 // ********************##********************##********************#
 
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
+import 'package:ddd_notes/injection.dart';
+import 'package:ddd_notes/presentation/core/app_widget.dart';
 
 // ********************##********************##********************#
 // ********************##********************##********************#
 
 // * Start of main()
-void main() => runApp(MyApp());
-
-// ***************************END***************************
-
-// * Start of MyApp
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Material App',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Material App Bar'),
-        ),
-        body: Center(
-          child: Container(
-            child: Text('Hello World'),
-          ),
-        ),
-      ),
-    );
-  }
+void main() {
+  configureInjection(Environment.prod);
+  runApp(AppWidget());
 }
 
 // ***************************END***************************
-
-
-
-
-
-
-
-
-
-
-
-
-//  * Start of Country Model
-//  ? Fields
-//  ***************************END***************************
