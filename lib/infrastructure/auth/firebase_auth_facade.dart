@@ -2,15 +2,15 @@
 // ********************##********************##********************#
 // ********************##********************##********************#
 import 'package:dartz/dartz.dart';
-import 'package:ddd_notes/domain/auth/user.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:injectable/injectable.dart';
 import 'package:ddd_notes/domain/auth/auth_failure.dart';
 import 'package:ddd_notes/domain/auth/i_auth_facade.dart';
+import 'package:ddd_notes/domain/auth/user.dart';
 import 'package:ddd_notes/domain/auth/value_objects.dart';
-import 'package:injectable/injectable.dart';
 import './firebase_user_mapper.dart';
 
 // ********************##********************##********************#
@@ -28,25 +28,15 @@ class FirebaseAuthFacade implements IAuthFacade {
     this._googleSignIn,
   );
 
-  //? We will get Signed In User Id from the FirebaseAuth using Using currentUser method
-  //? and then pass it non null value to the User class, setting up the value of id to
-  //? UniqueId.fromUniqueString(uid)
-  //? toDomain is defined in extension of FirebaseUser
   @override
-  Future<Option<User>> getSignedInUser() => _firebaseAuth
-      .currentUser()
-      .then((firebaseUser) => optionOf(firebaseUser?.toDomain()));
+  Future<Option<User>> getSignedInUser() async =>
+      optionOf(_firebaseAuth.currentUser?.toDomain());
 
-  //? Implementation of registerWithEmailAndPassword
   @override
   Future<Either<AuthFailure, Unit>> registerWithEmailAndPassword({
     @required EmailAddress emailAddress,
     @required Password password,
   }) async {
-    //? The _firebaseAuth.createUserWithEmailAndPassword() method
-    //? only accepts the String, So we call getOrCrash() method defined in ValueObject
-    //? Which if String value is correct gives out right() else left containing
-    //? UnexpectedValueError
     final emailAddressStr = emailAddress.getOrCrash();
     final passwordStr = password.getOrCrash();
     try {
@@ -54,13 +44,8 @@ class FirebaseAuthFacade implements IAuthFacade {
         email: emailAddressStr,
         password: passwordStr,
       );
-      //? If operation is successful program will simply return unit
       return right(unit);
-    } on PlatformException catch (e) {
-      //? Instead of throwing out exemption we will return AuthFailure base on value
-      //? of exception
-      //? e: exception contains the value caught by [PlatformException]
-      //? e.code compares to predefined value in [FirebaseAuth]
+    } on FirebaseAuthException catch (e) {
       if (e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
         return left(const AuthFailure.emailAlreadyInUse());
       } else {
@@ -69,7 +54,6 @@ class FirebaseAuthFacade implements IAuthFacade {
     }
   }
 
-  //? Implementation of signInWithEmailAndPassword
   @override
   Future<Either<AuthFailure, Unit>> signInWithEmailAndPassword({
     @required EmailAddress emailAddress,
@@ -83,7 +67,7 @@ class FirebaseAuthFacade implements IAuthFacade {
         password: passwordStr,
       );
       return right(unit);
-    } on PlatformException catch (e) {
+    } on FirebaseAuthException catch (e) {
       if (e.code == 'ERROR_WRONG_PASSWORD' ||
           e.code == 'ERROR_USER_NOT_FOUND') {
         return left(const AuthFailure.invalidEmailAndPasswordCombination());
@@ -93,7 +77,6 @@ class FirebaseAuthFacade implements IAuthFacade {
     }
   }
 
-  //? Implementation of signInWithGoogle
   @override
   Future<Either<AuthFailure, Unit>> signInWithGoogle() async {
     try {
@@ -104,24 +87,22 @@ class FirebaseAuthFacade implements IAuthFacade {
 
       final googleAuthentication = await googleUser.authentication;
 
-      final authCredential = GoogleAuthProvider.getCredential(
+      final authCredential = GoogleAuthProvider.credential(
         idToken: googleAuthentication.idToken,
         accessToken: googleAuthentication.accessToken,
       );
 
       await _firebaseAuth.signInWithCredential(authCredential);
       return right(unit);
-    } on PlatformException catch (_) {
+    } on FirebaseAuthException catch (_) {
       return left(const AuthFailure.serverError());
     }
   }
 
-  //? Implementation of signOut
   @override
   Future<void> signOut() => Future.wait([
         _googleSignIn.signOut(),
         _firebaseAuth.signOut(),
       ]);
 }
-
 // ***************************END***************************
