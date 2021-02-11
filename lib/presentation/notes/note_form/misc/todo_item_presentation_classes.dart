@@ -5,6 +5,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:ddd_notes/domain/core/value_object.dart';
 import 'package:ddd_notes/domain/notes/todo_item.dart';
 import 'package:ddd_notes/domain/notes/value_objects.dart';
+import 'package:kt_dart/kt.dart';
+import 'package:flutter/cupertino.dart';
 
 // ********************##********************##********************#
 // ********************##********************##********************#
@@ -14,6 +16,13 @@ import 'package:ddd_notes/domain/notes/value_objects.dart';
 part 'todo_item_presentation_classes.freezed.dart';
 
 // ********************##********************##
+
+// * Start of FormTodos
+class FormTodos extends ValueNotifier<KtList<TodoItemPrimitive>> {
+  FormTodos() : super(emptyList<TodoItemPrimitive>());
+}
+
+// ***************************END***************************
 
 
 // * Start of TodoItemPrimitive
