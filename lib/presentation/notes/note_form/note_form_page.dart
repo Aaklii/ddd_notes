@@ -7,6 +7,7 @@ import 'package:ddd_notes/presentation/notes/note_form/misc/todo_item_presentati
 import 'package:ddd_notes/presentation/notes/note_form/widgets/add_todo_tile_widget.dart';
 import 'package:ddd_notes/presentation/notes/note_form/widgets/body_field_widget.dart';
 import 'package:ddd_notes/presentation/notes/note_form/widgets/color_field_widget.dart';
+import 'package:ddd_notes/presentation/notes/note_form/widgets/todo_list_widget.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
@@ -158,6 +159,7 @@ class NoteFormPageScaffold extends StatelessWidget {
                   children: [
                     const BodyField(),
                     const ColorField(),
+                    const TodoList(),
                     const AddTodoTile(),
                   ],
                 ),
