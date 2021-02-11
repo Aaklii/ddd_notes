@@ -21,10 +21,13 @@ import 'package:ddd_notes/domain/notes/note_failure.dart';
 abstract class INoteRepository {
   //? watchAll: To get all the notes
   Stream<Either<NoteFailure, KtList<Note>>> watchAll();
-  //? watchUncompleted: To get all the uncompleted  notes
+  //? watchUncompleted: To get all the uncompleted notes
   Stream<Either<NoteFailure, KtList<Note>>> watchUncompleted();
+  //? create: To create note
   Future<Either<NoteFailure, Unit>> create(Note note);
+  //? update: To update note
   Future<Either<NoteFailure, Unit>> update(Note note);
+  //? delete: To delete note
   Future<Either<NoteFailure, Unit>> delete(Note note);
 }
 
