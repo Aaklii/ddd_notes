@@ -3,6 +3,7 @@
 // ********************##********************##********************#
 import 'package:auto_route/auto_route.dart';
 import 'package:dartz/dartz.dart';
+import 'package:ddd_notes/presentation/notes/note_form/widgets/body_field_widget.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,6 @@ import 'package:ddd_notes/presentation/routes/router.gr.dart';
 
 // ********************##********************##********************#
 // ********************##********************##********************#
-
 
 // * Start of NoteFormPage
 class NoteFormPage extends StatelessWidget {
@@ -75,7 +75,6 @@ class NoteFormPage extends StatelessWidget {
 
 // ***************************END***************************
 
-
 // * Start of SavingInProgressOverlay
 class SavingInProgressOverlay extends StatelessWidget {
   final bool isSaving;
@@ -118,7 +117,6 @@ class SavingInProgressOverlay extends StatelessWidget {
 
 // ***************************END***************************
 
-
 // * Start of NoteFormPageScaffold
 class NoteFormPageScaffold extends StatelessWidget {
   const NoteFormPageScaffold({
@@ -143,6 +141,22 @@ class NoteFormPageScaffold extends StatelessWidget {
             },
           )
         ],
+      ),
+      body: BlocBuilder<NoteFormBloc, NoteFormState>(
+        buildWhen: (p, c) => p.showErrorMessages != c.showErrorMessages,
+        builder: (context, state) {
+          return Form(
+            autovalidate: state.showErrorMessages,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const BodyField(),
+                  // const ColorField(),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
