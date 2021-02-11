@@ -11,6 +11,7 @@ import 'package:ddd_notes/domain/auth/auth_failure.dart';
 import 'package:ddd_notes/domain/auth/i_auth_facade.dart';
 import 'package:ddd_notes/domain/auth/value_objects.dart';
 import 'package:injectable/injectable.dart';
+import './firebase_user_mapper.dart';
 
 // ********************##********************##********************#
 // ********************##********************##********************#
@@ -27,11 +28,14 @@ class FirebaseAuthFacade implements IAuthFacade {
     this._googleSignIn,
   );
 
-  //? Implementation of getSignedInUser
+  //? We will get Signed In User Id from the FirebaseAuth using Using currentUser method
+  //? and then pass it non null value to the User class, setting up the value of id to
+  //? UniqueId.fromUniqueString(uid)
+  //? toDomain is defined in extension of FirebaseUser
   @override
-  Future<Option<User>> getSignedInUser() {
-    throw UnimplementedError();
-  }
+  Future<Option<User>> getSignedInUser() => _firebaseAuth
+      .currentUser()
+      .then((firebaseUser) => optionOf(firebaseUser?.toDomain()));
 
   //? Implementation of registerWithEmailAndPassword
   @override
@@ -114,9 +118,10 @@ class FirebaseAuthFacade implements IAuthFacade {
 
   //? Implementation of signOut
   @override
-  Future<void> signOut() {
-    throw UnimplementedError();
-  }
+  Future<void> signOut() => Future.wait([
+        _googleSignIn.signOut(),
+        _firebaseAuth.signOut(),
+      ]);
 }
 
 // ***************************END***************************
