@@ -22,3 +22,8 @@ class UnexpectedValueError extends Error {
 }
 
 // ***************************END***************************
+
+// * Start of NotAuthenticatedError
+class NotAuthenticatedError extends Error {}
+
+// ***************************END***************************
