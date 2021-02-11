@@ -19,16 +19,20 @@ class AppWidget extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) =>
-          getIt<AuthBloc>()..add(const AuthEvent.authCheckRequested()),
+              getIt<AuthBloc>()..add(const AuthEvent.authCheckRequested()),
         )
       ],
       child: MaterialApp(
         title: 'Notes',
         debugShowCheckedModeBanner: false,
+        // builder: ExtendedNavigator(router: Route.Router()),
         home: SignInPage(),
         theme: ThemeData.light().copyWith(
           primaryColor: Colors.green[800],
           accentColor: Colors.blueAccent,
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+            backgroundColor: Colors.blue[900],
+          ),
           inputDecorationTheme: InputDecorationTheme(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),

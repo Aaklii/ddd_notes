@@ -7,7 +7,6 @@ import 'package:ddd_notes/domain/core/failures.dart';
 // ********************##********************##********************#
 // ********************##********************##********************#
 
-
 // * Start of validateEmailAddress
 Either<ValueFailure<String>, String> validateEmailAddress(String input) {
   const emailRegex =
@@ -20,7 +19,6 @@ Either<ValueFailure<String>, String> validateEmailAddress(String input) {
 }
 
 // ***************************END***************************
-
 
 // * Start of validatePassword
 Either<ValueFailure<String>, String> validatePassword(String input) {
