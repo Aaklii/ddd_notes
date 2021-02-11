@@ -12,6 +12,7 @@ import 'package:ddd_notes/injection.dart';
 import 'package:ddd_notes/presentation/routes/router.gr.dart';
 import 'package:ddd_notes/presentation/notes/notes_overview/widgets/notes_overview_body_widget.dart';
 import 'package:ddd_notes/presentation/notes/notes_overview/widgets/uncompleted_switch.dart';
+
 // ********************##********************##********************#
 // ********************##********************##********************#
 
@@ -76,8 +77,7 @@ class NotesOverviewPage extends StatelessWidget {
           body: NotesOverviewBody(),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              // TODO: Navigate to NoteFormPage
-              // ExtendedNavigator.of(context).pushNoteFormPage(editedNote: null);
+              ExtendedNavigator.of(context).pushNoteFormPage(editedNote: null);
             },
             child: Icon(Icons.add),
           ),

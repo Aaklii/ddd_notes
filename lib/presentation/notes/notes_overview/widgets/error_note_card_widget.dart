@@ -7,7 +7,7 @@ import 'package:ddd_notes/domain/notes/note.dart';
 // ********************##********************##********************#
 // ********************##********************##********************#
 
-// * Start of NoteCard
+// * Start of ErrorNoteCard
 class ErrorNoteCard extends StatelessWidget {
   final Note note;
 

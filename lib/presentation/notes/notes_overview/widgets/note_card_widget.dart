@@ -13,7 +13,6 @@ import 'package:ddd_notes/presentation/routes/router.gr.dart';
 // ********************##********************##********************#
 // ********************##********************##********************#
 
-
 // * Start of NoteCard
 class NoteCard extends StatelessWidget {
   final Note note;
@@ -29,8 +28,7 @@ class NoteCard extends StatelessWidget {
       color: note.color.getOrCrash(),
       child: InkWell(
         onTap: () {
-          // Todo NoteFormPage
-          // ExtendedNavigator.of(context).pushNoteFormPage(editedNote: note);
+          ExtendedNavigator.of(context).pushNoteFormPage(editedNote: note);
         },
         onLongPress: () {
           final noteActorBloc = context.bloc<NoteActorBloc>();
@@ -97,7 +95,6 @@ class NoteCard extends StatelessWidget {
 }
 
 // ***************************END***************************
-
 
 // * Start of TodoDisplay
 class TodoDisplay extends StatelessWidget {
