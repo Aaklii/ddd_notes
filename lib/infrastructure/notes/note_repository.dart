@@ -22,7 +22,8 @@ class NoteRepository implements INoteRepository {
   final Firestore _firestore;
 
   NoteRepository(this._firestore);
-
+  
+  //? watchAll: To get all the notes
   @override
   Stream<Either<NoteFailure, KtList<Note>>> watchAll() async* {
     final userDoc = await _firestore.userDocument();
@@ -45,7 +46,8 @@ class NoteRepository implements INoteRepository {
       }
     });
   }
-
+  
+  //? watchUncompleted: To get all the uncompleted notes
   @override
   Stream<Either<NoteFailure, KtList<Note>>> watchUncompleted() async* {
     final userDoc = await _firestore.userDocument();
@@ -73,7 +75,8 @@ class NoteRepository implements INoteRepository {
       }
     });
   }
-
+  
+  //? create: To create note
   @override
   Future<Either<NoteFailure, Unit>> create(Note note) async {
     try {
@@ -93,7 +96,8 @@ class NoteRepository implements INoteRepository {
       }
     }
   }
-
+  
+  //? update: To update note
   @override
   Future<Either<NoteFailure, Unit>> update(Note note) async {
     try {
@@ -115,7 +119,8 @@ class NoteRepository implements INoteRepository {
       }
     }
   }
-
+  
+  //? delete: To delete note
   @override
   Future<Either<NoteFailure, Unit>> delete(Note note) async {
     try {
